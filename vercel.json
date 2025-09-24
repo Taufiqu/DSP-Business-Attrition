@@ -2,12 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "app_vercel.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "maxDuration": 30
-      }
+      "src": "api/index.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
@@ -17,11 +13,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "app_vercel.py"
+      "dest": "api/index.py"
     }
-  ],
-  "env": {
-    "FLASK_ENV": "production",
-    "PYTHONPATH": "/var/task"
-  }
+  ]
 }
