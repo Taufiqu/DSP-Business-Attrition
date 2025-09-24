@@ -65,6 +65,35 @@ def test():
         'working': True
     })
 
+@app.route('/debug')
+def debug():
+    """Debug endpoint to check file structure"""
+    import glob
+    import sys
+    
+    return jsonify({
+        'current_working_dir': os.getcwd(),
+        'templates_folder': app.template_folder,
+        'static_folder': app.static_folder,
+        'templates_exists': os.path.exists(app.template_folder),
+        'static_exists': os.path.exists(app.static_folder),
+        'template_files': glob.glob(os.path.join(app.template_folder, '*.html')) if os.path.exists(app.template_folder) else [],
+        'python_version': sys.version,
+        'flask_version': '3.0.0'
+    })
+
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify({'error': 'Page not found', 'status': 404}), 404
+
+@app.errorhandler(500)
+def server_error(e):
+    return jsonify({
+        'error': 'Internal server error', 
+        'status': 500,
+        'details': str(e)
+    }), 500
+
 # This is required for Vercel
 if __name__ == '__main__':
     app.run()
