@@ -1,0 +1,439 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Business Attrition Analysis{% endblock %}
+
+{% block page_title %}Business Attrition Dashboard{% endblock %}
+{% block page_subtitle %}Visualisasi Data Attrition Real-time{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Additional styles for dashboard page */
+    .dashboard-controls {
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .dashboard-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #28a745;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+    
+    .dashboard-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .btn-small {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        border-radius: 20px;
+    }
+    
+    .fullscreen-btn {
+        background: #6c757d;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .fullscreen-btn:hover {
+        background: #5a6268;
+    }
+    
+    .dashboard-embed-container {
+        position: relative;
+        background: white;
+        border-radius: 10px;
+        padding: 1rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .embed-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 600px;
+        background: #f8f9fa;
+        border: 2px dashed #dee2e6;
+        border-radius: 8px;
+        text-align: center;
+        padding: 2rem;
+    }
+    
+    .embed-placeholder h3 {
+        color: #6c757d;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    
+    .embed-placeholder p {
+        color: #6c757d;
+        max-width: 500px;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+    
+    .embed-code-info {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 5px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .code-block {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 1rem;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        overflow-x: auto;
+        margin-top: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+        .dashboard-controls {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .dashboard-info {
+            justify-content: center;
+        }
+        
+        .dashboard-actions {
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dashboard Controls -->
+<div class="dashboard-controls fade-in">
+    <div class="dashboard-info">
+        <div class="status-indicator">
+            <div class="status-dot"></div>
+            <span>Dashboard Aktif</span>
+        </div>
+        <span>|</span>
+        <span>📊 Google Looker Studio</span>
+        <span>|</span>
+        <span>⏰ Diperbarui: <span id="last-updated">Loading...</span></span>
+    </div>
+    
+    <div class="dashboard-actions">
+        <button onclick="refreshDashboard()" class="btn btn-small">🔄 Refresh</button>
+        <button onclick="toggleFullscreen()" class="btn btn-small fullscreen-btn" id="fullscreen-btn">
+            🔍 Fullscreen
+        </button>
+        <a href="{{ url_for('about') }}" target="_blank" class="btn btn-small btn-secondary">ℹ️ Info</a>
+    </div>
+</div>
+
+<!-- Dashboard Container -->
+<div class="dashboard-container fade-in">
+    <div class="dashboard-header">
+        <h2>📈 Business Attrition Analytics</h2>
+        <p>Eksplorasi data attrition dengan visualisasi interaktif dan insights mendalam</p>
+    </div>
+    
+    <div class="dashboard-embed-container" id="dashboard-container">
+        <!-- Placeholder content - Replace with actual Looker Studio embed -->
+        <div class="embed-placeholder">
+            <h3>📊 Dashboard Looker Studio</h3>
+            <p>
+                Untuk menampilkan dashboard Looker Studio, silakan paste embed code Anda di bagian yang telah disediakan dalam file template ini.
+            </p>
+            
+            <div class="embed-code-info">
+                <strong>📋 Langkah-langkah untuk menambahkan embed code:</strong>
+                <ol style="text-align: left; margin-top: 1rem;">
+                    <li>Buka dashboard Anda di Google Looker Studio</li>
+                    <li>Klik tombol "Share" (Bagikan)</li>
+                    <li>Pilih "Embed report" (Sematkan laporan)</li>
+                    <li>Copy embed code yang diberikan</li>
+                    <li>Paste di bagian yang ditandai dalam file ini</li>
+                </ol>
+            </div>
+            
+            <div class="code-block">
+                <iframe width="1000" height="3000" src="https://lookerstudio.google.com/embed/reporting/1f6d0e32-9c2a-46aa-b5a7-b8e4b29ed806/page/p_ftmd8ridwd" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe><br>
+            </div>
+            
+            <p style="margin-top: 1.5rem;">
+                <strong>💡 Tips:</strong> Setelah menambahkan embed code, dashboard akan ditampilkan secara penuh dengan semua fitur interaktif Looker Studio.
+            </p>
+            
+            <a href="https://support.google.com/looker-studio/answer/9046660" target="_blank" class="btn" style="margin-top: 1rem;">
+                📚 Panduan Embed Looker Studio
+            </a>
+        </div>
+        
+        <!-- 
+        TODO: Replace the placeholder above with your actual Looker Studio embed code
+        Example:
+        <iframe 
+            class="dashboard-embed" 
+            src="YOUR_LOOKER_STUDIO_EMBED_URL_HERE"
+            frameborder="0" 
+            style="border:0" 
+            allowfullscreen
+            loading="lazy"
+            title="Business Attrition Dashboard">
+        </iframe>
+        -->
+    </div>
+</div>
+
+<!-- Dashboard Features -->
+<div class="features-grid" style="margin-top: 3rem;">
+    <div class="feature-card slide-up">
+        <div class="feature-icon">📊</div>
+        <h3>Metrics Overview</h3>
+        <p>Lihat metrik utama seperti turnover rate, attrition by department, dan trend bulanan dalam satu pandangan.</p>
+    </div>
+    
+    <div class="feature-card slide-up">
+        <div class="feature-icon">🎯</div>
+        <h3>Predictive Analytics</h3>
+        <p>Identifikasi pola dan prediksi attrition di masa depan dengan model analitik yang canggih.</p>
+    </div>
+    
+    <div class="feature-card slide-up">
+        <div class="feature-icon">📈</div>
+        <h3>Trend Analysis</h3>
+        <p>Analisis tren attrition dari waktu ke waktu dengan visualisasi yang mudah dipahami.</p>
+    </div>
+    
+    <div class="feature-card slide-up">
+        <div class="feature-icon">🔍</div>
+        <h3>Deep Dive Filters</h3>
+        <p>Filter data berdasarkan department, job level, tenure, salary range, dan berbagai dimensi lainnya.</p>
+    </div>
+</div>
+
+<!-- Help Section -->
+<div class="card fade-in" style="margin-top: 2rem;">
+    <h3>🆘 Butuh Bantuan?</h3>
+    <p>Jika Anda mengalami masalah dalam menggunakan dashboard atau memerlukan panduan lebih lanjut:</p>
+    <ul style="margin: 1rem 0; padding-left: 2rem;">
+        <li>Pastikan koneksi internet Anda stabil</li>
+        <li>Refresh halaman jika dashboard tidak memuat dengan sempurna</li>
+        <li>Gunakan browser modern untuk performa optimal</li>
+        <li>Klik tombol "Info" untuk detail teknis lebih lanjut</li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    let isFullscreen = false;
+    
+    // Update timestamp
+    function updateTimestamp() {
+        const now = new Date();
+        const timestamp = now.toLocaleString('id-ID', {
+            timeZone: 'Asia/Jakarta',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        document.getElementById('last-updated').textContent = timestamp;
+    }
+    
+    // Refresh dashboard
+    function refreshDashboard() {
+        const container = document.getElementById('dashboard-container');
+        const iframe = container.querySelector('iframe');
+        
+        if (iframe) {
+            // Show loading state
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'loading';
+            loadingDiv.innerHTML = `
+                <div class="spinner"></div>
+                <p style="margin-left: 1rem;">Memuat ulang dashboard...</p>
+            `;
+            
+            container.appendChild(loadingDiv);
+            
+            // Reload iframe
+            iframe.src = iframe.src;
+            
+            // Remove loading state after 3 seconds
+            setTimeout(() => {
+                if (loadingDiv.parentNode) {
+                    loadingDiv.remove();
+                }
+                updateTimestamp();
+            }, 3000);
+        } else {
+            // If no iframe, just update timestamp
+            updateTimestamp();
+            
+            // Show temporary message
+            const message = document.createElement('div');
+            message.className = 'success-message';
+            message.textContent = 'Dashboard diperbarui!';
+            message.style.position = 'fixed';
+            message.style.top = '20px';
+            message.style.right = '20px';
+            message.style.zIndex = '1000';
+            
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 2000);
+        }
+    }
+    
+    // Toggle fullscreen
+    function toggleFullscreen() {
+        const container = document.getElementById('dashboard-container');
+        const btn = document.getElementById('fullscreen-btn');
+        
+        if (!isFullscreen) {
+            // Enter fullscreen
+            container.style.position = 'fixed';
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.width = '100vw';
+            container.style.height = '100vh';
+            container.style.zIndex = '9999';
+            container.style.margin = '0';
+            container.style.borderRadius = '0';
+            
+            const iframe = container.querySelector('iframe, .embed-placeholder');
+            if (iframe) {
+                iframe.style.width = '100%';
+                iframe.style.height = 'calc(100vh - 2rem)';
+            }
+            
+            btn.innerHTML = '📤 Exit Fullscreen';
+            isFullscreen = true;
+            
+        } else {
+            // Exit fullscreen
+            container.style.position = 'relative';
+            container.style.top = 'auto';
+            container.style.left = 'auto';
+            container.style.width = 'auto';
+            container.style.height = 'auto';
+            container.style.zIndex = 'auto';
+            container.style.margin = '';
+            container.style.borderRadius = '10px';
+            
+            const iframe = container.querySelector('iframe, .embed-placeholder');
+            if (iframe) {
+                iframe.style.width = '100%';
+                iframe.style.height = '600px';
+            }
+            
+            btn.innerHTML = '🔍 Fullscreen';
+            isFullscreen = false;
+        }
+    }
+    
+    // Handle escape key for fullscreen exit
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && isFullscreen) {
+            toggleFullscreen();
+        }
+    });
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        updateTimestamp();
+        
+        // Update timestamp every minute
+        setInterval(updateTimestamp, 60000);
+        
+        // Add animation to dashboard controls
+        setTimeout(() => {
+            document.querySelector('.dashboard-controls').classList.add('slide-up');
+        }, 200);
+        
+        // Monitor iframe load
+        const iframe = document.querySelector('iframe.dashboard-embed');
+        if (iframe) {
+            iframe.addEventListener('load', function() {
+                console.log('Dashboard loaded successfully');
+                updateTimestamp();
+            });
+            
+            iframe.addEventListener('error', function() {
+                console.error('Failed to load dashboard');
+                handleIframeError(this);
+            });
+        }
+        
+        // Add loading state for dashboard
+        const dashboardContainer = document.getElementById('dashboard-container');
+        const placeholder = dashboardContainer.querySelector('.embed-placeholder');
+        
+        if (!placeholder) {
+            showLoading('dashboard-container');
+            
+            setTimeout(() => {
+                const loadingDiv = dashboardContainer.querySelector('.loading');
+                if (loadingDiv) {
+                    loadingDiv.remove();
+                }
+            }, 2000);
+        }
+    });
+    
+    // Add smooth transitions
+    const style = document.createElement('style');
+    style.textContent = `
+        .dashboard-embed-container {
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-embed {
+            transition: all 0.3s ease;
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+{% endblock %}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Business Attrition Dashboard{% endblock %}</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Dashboard analisis Business Attrition menggunakan Google Looker Studio">
+    <meta name="keywords" content="business attrition, dashboard, analytics, looker studio, flask">
+    <meta name="author" content="Your Name">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Business Attrition Dashboard">
+    <meta property="og:description" content="Dashboard analisis Business Attrition menggunakan Google Looker Studio">
+    <meta property="og:type" content="website">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>{% block page_title %}Business Attrition Dashboard{% endblock %}</h1>
+            <p>{% block page_subtitle %}Analisis Komprehensif Attrition Karyawan{% endblock %}</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="{{ url_for('home') }}">🏠 Beranda</a></li>
+                <li><a href="{{ url_for('dashboard') }}">📊 Dashboard</a></li>
+                <li><a href="{{ url_for('about') }}" target="_blank">ℹ️ Info</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            {% if error_message %}
+            <div class="error-message fade-in">
+                <h2>{{ title or 'Error' }}</h2>
+                <p>{{ error_message }}</p>
+                <a href="{{ url_for('home') }}" class="btn">Kembali ke Beranda</a>
+            </div>
+            {% else %}
+            {% block content %}
+            <!-- Default content will be overridden by child templates -->
+            <div class="welcome-section fade-in">
+                <h2>Selamat Datang di Business Attrition Dashboard</h2>
+                <p>Dashboard ini menyediakan analisis mendalam tentang pola attrition dalam organisasi Anda.</p>
+            </div>
+            {% endblock %}
+            {% endif %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; {{ moment().format('YYYY') if moment else '2024' }} Business Attrition Dashboard. All rights reserved.</p>
+            <p>Dibuat dengan ❤️ menggunakan Flask dan Google Looker Studio</p>
+            <p>
+                <a href="https://github.com" target="_blank">GitHub</a> | 
+                <a href="mailto:your.email@example.com">Contact</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    {% block scripts %}
+    <script>
+        // Basic JavaScript functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in animation to cards
+            const cards = document.querySelectorAll('.card, .feature-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('fade-in');
+                }, index * 100);
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Add active class to current navigation item
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.style.backgroundColor = '#667eea';
+                    link.style.color = 'white';
+                }
+            });
+        });
+
+        // Function to show loading spinner
+        function showLoading(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p style="margin-left: 1rem;">Memuat dashboard...</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Function to handle iframe load error
+        function handleIframeError(iframe) {
+            const container = iframe.parentElement;
+            container.innerHTML = `
+                <div class="error-message">
+                    <h3>❌ Gagal Memuat Dashboard</h3>
+                    <p>Terjadi kesalahan saat memuat dashboard. Silakan coba lagi atau hubungi administrator.</p>
+                    <button onclick="location.reload()" class="btn">🔄 Coba Lagi</button>
+                </div>
+            `;
+        }
+
+        // Function to check if element is in viewport
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Add scroll animations
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.slide-up');
+            elements.forEach(element => {
+                if (isInViewport(element)) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScrollAnimations);
+        window.addEventListener('resize', handleScrollAnimations);
+    </script>
+    {% endblock %}
+</body>
+</html>

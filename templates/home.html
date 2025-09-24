@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block title %}Beranda - Business Attrition Dashboard{% endblock %}
+
+{% block content %}
+<div class="welcome-section fade-in">
+    <h2>Selamat Datang di Business Attrition Dashboard</h2>
+    <p>Platform analisis komprehensif untuk memahami dan mengatasi attrition karyawan dalam organisasi Anda.</p>
+    <div style="margin-top: 2rem;">
+        <a href="{{ url_for('dashboard') }}" class="btn">📊 Lihat Dashboard</a>
+        <a href="{{ url_for('about') }}" class="btn btn-secondary" target="_blank" style="margin-left: 1rem;">ℹ️ Pelajari Lebih Lanjut</a>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-grid">
+    <div class="feature-card slide-up">
+        <div class="feature-icon">📈</div>
+        <h3>Analisis Mendalam</h3>
+        <p>Dapatkan wawasan mendalam tentang pola attrition karyawan dengan visualisasi data yang komprehensif dan interaktif.</p>
+    </div>
+    
+    <div class="feature-card slide-up">
+        <div class="feature-icon">🎯</div>
+        <h3>Prediksi Akurat</h3>
+        <p>Identifikasi karyawan yang berisiko tinggi untuk resign dengan model prediktif yang telah divalidasi.</p>
+    </div>
+    
+    <div class="feature-card slide-up">
+        <div class="feature-icon">⚡</div>
+        <h3>Real-time Monitoring</h3>
+        <p>Monitor tren attrition secara real-time dengan dashboard yang terintegrasi dengan Google Looker Studio.</p>
+    </div>
+    
+    <div class="feature-card slide-up">
+        <div class="feature-icon">📊</div>
+        <h3>Visualisasi Interaktif</h3>
+        <p>Eksplorasi data dengan grafik dan chart interaktif yang memudahkan pemahaman pola dan tren.</p>
+    </div>
+    
+    <div class="feature-card slide-up">
+        <div class="feature-icon">🎨</div>
+        <h3>Interface Modern</h3>
+        <p>Antarmuka yang responsif dan user-friendly yang dapat diakses dari berbagai perangkat.</p>
+    </div>
+    
+    <div class="feature-card slide-up">
+        <div class="feature-icon">🔒</div>
+        <h3>Secure & Reliable</h3>
+        <p>Keamanan data terjamin dengan infrastruktur cloud yang reliable dan scalable.</p>
+    </div>
+</div>
+
+<!-- About Section -->
+<div class="card fade-in" style="margin-top: 3rem;">
+    <h3>🎯 Tentang Project Ini</h3>
+    <p>
+        Business Attrition Dashboard adalah platform analisis yang dirancang khusus untuk membantu organisasi 
+        memahami dan mengatasi masalah attrition karyawan. Dengan memanfaatkan kekuatan Google Looker Studio, 
+        dashboard ini menyediakan visualisasi data yang powerful dan insights yang actionable.
+    </p>
+    <p style="margin-top: 1rem;">
+        Dashboard ini dikembangkan sebagai bagian dari project kapsel semester 7, dengan fokus pada implementasi 
+        teknologi cloud dan data analytics untuk solusi bisnis yang nyata.
+    </p>
+</div>
+
+<!-- Getting Started Section -->
+<div class="card fade-in">
+    <h3>🚀 Cara Memulai</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 1rem;">
+        <div>
+            <h4 style="color: #667eea; margin-bottom: 0.5rem;">1. Akses Dashboard</h4>
+            <p>Klik tombol "Lihat Dashboard" untuk mengakses visualisasi data attrition.</p>
+        </div>
+        <div>
+            <h4 style="color: #667eea; margin-bottom: 0.5rem;">2. Eksplorasi Data</h4>
+            <p>Gunakan filter dan kontrol interaktif untuk mengeksplorasi berbagai aspek data.</p>
+        </div>
+        <div>
+            <h4 style="color: #667eea; margin-bottom: 0.5rem;">3. Analisis Insights</h4>
+            <p>Pelajari pola dan tren untuk mengidentifikasi faktor-faktor penyebab attrition.</p>
+        </div>
+        <div>
+            <h4 style="color: #667eea; margin-bottom: 0.5rem;">4. Tindak Lanjut</h4>
+            <p>Gunakan insights untuk mengembangkan strategi retensi karyawan yang efektif.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+<div class="card fade-in">
+    <h3>📊 Fitur Dashboard</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 1rem; text-align: center;">
+        <div>
+            <h2 style="color: #667eea; margin-bottom: 0.5rem;">15+</h2>
+            <p>Metrik Utama</p>
+        </div>
+        <div>
+            <h2 style="color: #667eea; margin-bottom: 0.5rem;">10+</h2>
+            <p>Visualisasi</p>
+        </div>
+        <div>
+            <h2 style="color: #667eea; margin-bottom: 0.5rem;">5+</h2>
+            <p>Filter Interaktif</p>
+        </div>
+        <div>
+            <h2 style="color: #667eea; margin-bottom: 0.5rem;">100%</h2>
+            <p>Real-time</p>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div style="text-align: center; margin: 3rem 0;">
+    <h3 style="margin-bottom: 1rem; color: #333;">Siap untuk Menganalisis Data Attrition?</h3>
+    <p style="margin-bottom: 2rem; color: #666; max-width: 500px; margin-left: auto; margin-right: auto;">
+        Mulai eksplorasi data dan dapatkan insights berharga untuk strategi retensi karyawan yang lebih baik.
+    </p>
+    <a href="{{ url_for('dashboard') }}" class="btn" style="font-size: 1.1rem; padding: 15px 30px;">
+        🚀 Mulai Analisis Sekarang
+    </a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    // Add staggered animation to feature cards
+    document.addEventListener('DOMContentLoaded', function() {
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.6s ease-out';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 200 + (index * 100));
+        });
+
+        // Add hover effects to statistics
+        const statItems = document.querySelectorAll('.card h2');
+        statItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    });
+
+    // Add scroll reveal animation
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    }, observerOptions);
+
+    // Observe all cards for animation
+    document.querySelectorAll('.card').forEach(card => {
+        observer.observe(card);
+    });
+</script>
+{% endblock %}
