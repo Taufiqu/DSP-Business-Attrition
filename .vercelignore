@@ -1,0 +1,56 @@
+# Ignore original app.py (use app_vercel.py instead)
+app.py
+
+# Ignore Docker and container files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Ignore other deployment configs
+Procfile
+cloudbuild.yaml
+fly.toml
+koyeb.yaml
+render.yaml
+
+# Ignore development files
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache
+.pytest_cache
+.hypothesis
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Ignore original requirements (use requirements_vercel.txt)
+requirements.txt

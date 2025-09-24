@@ -1,0 +1,15 @@
+version: 2
+services:
+  web:
+    build: .
+    http_checks:
+      - path: "/"
+    instance_size_slug: basic-xxs
+    instance_count: 1
+    routes:
+      - path: /
+    env_vars:
+      - key: FLASK_ENV
+        value: production
+      - key: PORT
+        value: "8080"
